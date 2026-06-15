@@ -1,0 +1,23 @@
+# Synthetic 3-tier ARM big.LITTLE: no core_type, no SMT, no L3 — kinds come
+# from the presence-tracked capacity thresholds (>=3/4 max = P, >=2/5 = E,
+# below = LP-E): 4x cap 1024 -> P, 4x cap 462 -> E, 2x cap 200 -> LP-E.
+lp_count=10
+core_count=10
+socket_count=1
+numa_node_count=1
+kind.performance=4
+kind.efficiency=4
+kind.lp_efficiency=2
+l3_domain_count=0
+l2.performance.size_bytes=524288
+l2.efficiency.size_bytes=262144
+l2.lp_efficiency.size_bytes=131072
+lp.0.kind=performance
+lp.0.l3_domain=none
+lp.4.kind=efficiency
+lp.8.kind=lp_efficiency
+lp.9.kind=lp_efficiency
+lp.9.smt_index=0
+lp.0.perf_hint=1024
+lp.4.perf_hint=462
+lp.8.perf_hint=200

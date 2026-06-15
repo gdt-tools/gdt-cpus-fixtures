@@ -1,0 +1,55 @@
+# Cix CP8180 (P1) — Minisforum MS-R1: 2x Cortex-A720@2.6 + 6x A720@2.5ish
+# + 4x A520@1.8, no SMT, ONE DSU L3 (12 MiB) spanning the chip. Recorded live.
+# THE real 3-tier capacity machine: no core_type files, kinds come purely from
+# cpu_capacity — and the real DTS values are spicy: the A720s span FOUR
+# capacities (1024 prime, 984/905/866 per mid-cluster binning), all >= 3/4 max
+# => all Performance; the A520s sit at 279 (27% of max), BELOW the 2/5
+# efficiency floor => LpEfficiency. Result: an EMPTY Efficiency tier (P=8,
+# E=0, LP-E=4) — honest for this chip, and exactly the kind of outcome
+# synthetic thresholds-tuned trees never produce.
+# Also preserved from the real kernel: the A520s' L2 cache index dir exists
+# but has NO size file => lp_efficiency L2 size_bytes=0 ("kernel didn't say").
+# Identity (vendor/model/features) is never asserted in fixtures.
+lp_count=12
+core_count=12
+socket_count=1
+numa_node_count=1
+kind.performance=8
+kind.efficiency=0
+kind.lp_efficiency=4
+l3_domain_count=1
+l3.0.size_bytes=12582912
+l3.0.core_count=12
+l3.0.lps=0-11
+l1d.performance.size_bytes=65536
+l1d.performance.line_bytes=64
+l1i.performance.size_bytes=65536
+l2.performance.size_bytes=524288
+l2.performance.shared_by=1
+l1d.lp_efficiency.size_bytes=32768
+l1i.lp_efficiency.size_bytes=32768
+l2.lp_efficiency.size_bytes=0
+lp.0.kind=performance
+lp.0.smt_index=0
+lp.0.l3_domain=0
+lp.2.kind=lp_efficiency
+lp.5.kind=lp_efficiency
+lp.6.kind=performance
+lp.11.kind=performance
+lp.11.l3_domain=0
+lp.11.numa_node=0
+lp.0.perf_hint=1024
+lp.10.perf_hint=984
+lp.6.perf_hint=905
+lp.8.perf_hint=866
+lp.2.perf_hint=279
+# Per-core ARM MIDR part, read from the FULL /proc/cpuinfo (every block, not
+# just the first): the A720 big cores report 0xd81=3457, the A520 little cores
+# 0xd80=3456 -- and the part split (cpu0-1,6-11 vs cpu2-5) matches the capacity
+# classification exactly. Decimal here, house style; the lib ships no name table.
+lp.0.cpu_part=3457
+lp.1.cpu_part=3457
+lp.2.cpu_part=3456
+lp.5.cpu_part=3456
+lp.6.cpu_part=3457
+lp.11.cpu_part=3457

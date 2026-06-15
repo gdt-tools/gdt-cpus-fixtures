@@ -1,0 +1,29 @@
+# Synthetic Alder-Lake-ish hybrid: 4 P-cores (SMT, core_type) + 8 E-cores in
+# two L2 clusters; one shared 25 MiB L3. core_type takes priority over capacity.
+lp_count=16
+core_count=12
+socket_count=1
+numa_node_count=1
+kind.performance=4
+kind.efficiency=8
+kind.lp_efficiency=0
+l3_domain_count=1
+l3.0.size_bytes=26214400
+l3.0.core_count=12
+l3.0.lps=0-15
+l1d.performance.size_bytes=49152
+l1d.efficiency.size_bytes=32768
+l2.performance.size_bytes=1310720
+l2.performance.shared_by=2
+l2.efficiency.size_bytes=2097152
+l2.efficiency.shared_by=4
+lp.0.core=0
+lp.0.smt_index=0
+lp.0.kind=performance
+lp.1.core=0
+lp.1.smt_index=1
+lp.8.kind=efficiency
+lp.8.smt_index=0
+lp.15.kind=efficiency
+lp.0.perf_hint=1024
+lp.8.perf_hint=600

@@ -1,0 +1,40 @@
+# Raspberry Pi 5 (BCM2712) -- 4x Cortex-A76 @ 2.4 GHz, ONE cluster, no SMT,
+# a single DSU L3 (2 MiB) spanning all four cores. Recorded live.
+# The HOMOGENEOUS case: every core reports cpu_capacity 1024, so min == max and
+# the capacity classifier never engages -- the homogeneous invariant makes them
+# all Performance (P=4, E=0, LP-E=0). Never report a uniform chip as Efficiency.
+# The degenerate NUMA: BCM2712 splits RAM into EIGHT NUMA nodes (~1 GB each) but
+# every node lists cpulist 0-3 (all CPUs in all nodes) and numactl shows the whole
+# distance matrix uniform at 10 -- zero access locality, so it is ONE effective
+# domain, not a real partition. Confirmed by lscpu + numactl, no numa= cmdline
+# override, reproduced on 3 units. Detection sees the CPU overlap and COLLAPSES:
+# numa_node_count 1, every LP numa_node 0. This is the regression anchor for the
+# collapse; sysfs-numa2 is the disjoint counter-test (collapse must NOT fire there).
+# Per-core CPU part is uniform 0xd0b = 3339 (Cortex-A76); decimal, no name table.
+# Identity (vendor/model/features) is never asserted in fixtures.
+lp_count=4
+core_count=4
+socket_count=1
+numa_node_count=1
+kind.performance=4
+kind.efficiency=0
+kind.lp_efficiency=0
+l3_domain_count=1
+l3.0.size_bytes=2097152
+l3.0.core_count=4
+l3.0.lps=0-3
+l1d.performance.size_bytes=65536
+l1d.performance.line_bytes=64
+l1i.performance.size_bytes=65536
+l2.performance.size_bytes=524288
+l2.performance.shared_by=1
+lp.0.kind=performance
+lp.0.smt_index=0
+lp.0.l3_domain=0
+lp.0.numa_node=0
+lp.0.perf_hint=1024
+lp.0.cpu_part=3339
+lp.3.kind=performance
+lp.3.l3_domain=0
+lp.3.numa_node=0
+lp.3.cpu_part=3339

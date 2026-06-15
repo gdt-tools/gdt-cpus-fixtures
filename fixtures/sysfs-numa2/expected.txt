@@ -1,0 +1,22 @@
+# Synthetic 2-node NUMA: 4 cores, 1 socket, no SMT, no caches, no capacity ->
+# homogeneous all-Performance. node0 = cpus 0-1, node1 = cpus 2-3 -- DISJOINT,
+# a real partition. This is the counter-test for the degenerate-NUMA collapse:
+# because no CPU appears in two nodes, the collapse must NOT fire -- the two
+# nodes survive (numa_node_count=2, LPs split 0/0/1/1). sysfs-pi5 is the
+# degenerate twin (8 overlapping nodes -> collapsed to 1).
+lp_count=4
+core_count=4
+socket_count=1
+numa_node_count=2
+kind.performance=4
+kind.efficiency=0
+kind.lp_efficiency=0
+l3_domain_count=0
+lp.0.numa_node=0
+lp.1.numa_node=0
+lp.2.numa_node=1
+lp.3.numa_node=1
+lp.0.kind=performance
+lp.3.kind=performance
+lp.0.l3_domain=none
+lp.0.cpu_part=0
