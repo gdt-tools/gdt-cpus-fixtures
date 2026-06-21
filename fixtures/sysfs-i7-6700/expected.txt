@@ -31,3 +31,22 @@ lp.7.core=3
 lp.7.smt_index=1
 lp.7.numa_node=0
 lp.0.perf_hint=1024
+
+# L2 cache domains
+l2_domain_count=4
+l2_domain.0.size_bytes=262144
+l2_domain.0.core_count=1
+l2_domain.0.l3_domain=0
+l2_domain.0.lps=0,4
+l2_domain.1.size_bytes=262144
+l2_domain.1.core_count=1
+l2_domain.1.l3_domain=0
+l2_domain.1.lps=1,5
+l2_domain.2.size_bytes=262144
+l2_domain.2.core_count=1
+l2_domain.2.l3_domain=0
+l2_domain.2.lps=2,6
+l2_domain.3.size_bytes=262144
+l2_domain.3.core_count=1
+l2_domain.3.l3_domain=0
+l2_domain.3.lps=3,7

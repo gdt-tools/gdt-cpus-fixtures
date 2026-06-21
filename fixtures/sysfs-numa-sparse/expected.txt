@@ -22,3 +22,6 @@ lp.0.kind=performance
 lp.3.kind=performance
 lp.0.l3_domain=none
 lp.0.cpu_part=0
+
+# L2 cache domains
+l2_domain_count=0
