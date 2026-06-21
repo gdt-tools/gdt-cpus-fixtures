@@ -1,0 +1,46 @@
+# Intel Core i7-6700 in a Proxmox LXC pinned to 2 logical CPUs (cpuset 1,4).
+# Recorded live (record_fixture.sh) from INSIDE the container. LXCFS virtualizes
+# /sys/.../cpu/online to the cpuset ("1,4") but NOT the cache shared_cpu_list,
+# which still names the offline host siblings (cpu1 -> "1,5", cpu4 -> "0,4").
+# That sparse online set is the regression anchor for the domain-order fix: a
+# domain's lowest member can be an OFFLINE lp, so detection's append order
+# disagreed with the ascending-lowest-lp contract. Domains MUST come out
+# ascending - l2_domain.0 = [0,4] before l2_domain.1 = [1,5] - and lp.1/lp.4
+# must point at the post-sort indices. Topology assertions only; identity comes
+# from live cpuid.
+lp_count=2
+core_count=2
+socket_count=1
+numa_node_count=1
+kind.performance=2
+kind.efficiency=0
+kind.lp_efficiency=0
+l3_domain_count=1
+l3.0.size_bytes=8388608
+l3.0.core_count=2
+l3.0.lps=0-7
+l1d.performance.size_bytes=32768
+l1d.performance.line_bytes=64
+l1i.performance.size_bytes=32768
+l2.performance.size_bytes=262144
+l2.performance.shared_by=2
+lp.1.core=0
+lp.1.smt_index=0
+lp.1.kind=performance
+lp.1.l3_domain=0
+lp.1.l2_domain=1
+lp.4.core=1
+lp.4.smt_index=0
+lp.4.l3_domain=0
+lp.4.l2_domain=0
+
+# L2 cache domains - MUST be ascending by lowest member lp (the fix)
+l2_domain_count=2
+l2_domain.0.size_bytes=262144
+l2_domain.0.core_count=1
+l2_domain.0.l3_domain=0
+l2_domain.0.lps=0,4
+l2_domain.1.size_bytes=262144
+l2_domain.1.core_count=1
+l2_domain.1.l3_domain=0
+l2_domain.1.lps=1,5
