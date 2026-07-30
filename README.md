@@ -91,12 +91,14 @@ macOS:
 tools/record_sysctl_fixture.sh fixtures/sysctl-new-machine
 ```
 
-Android, over adb. Tested only on a Quest 3 (Horizon OS). Two things about that
-device make the recipe below work unchanged, and both are its policy rather than
-anything guaranteed by Android: its `sh` accepts the script, and the shell user
-can write to and read back `/data/local/tmp`. Treat any other device as
-unverified, adjust the staging path to whatever its shell can actually use, and
-read the pulled tree before trusting it.
+Android, over adb. Tested only on a Quest 3 (Horizon OS), where the Linux
+recorder runs unchanged. `/data/local/tmp` is AOSP-standard and owned by the
+`shell` user, so the path itself is rarely the problem - `/data/local` above it
+being traversable but not listable is normal. What can refuse is device state and
+policy: in recovery or before first unlock there is no real `/data`, and a
+hardened build can restrict what the shell may do there. The recipe runs
+`sh <script>`, so the script is read as data and nothing needs an exec bit. Read
+the pulled tree before trusting it.
 
 ```sh
 adb push tools/record_fixture.sh /data/local/tmp/
