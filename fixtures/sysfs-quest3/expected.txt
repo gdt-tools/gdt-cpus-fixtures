@@ -1,0 +1,107 @@
+# Meta Quest 3 (Horizon OS, Snapdragon XR2 Gen 2) - recorded live off the
+# headset over adb, running tools/record_fixture.sh unmodified on the device.
+#
+# Four properties here exist in no other fixture:
+#
+# 1. TWO "sockets" on a phone-class SoC. physical_package_id really is 0 for
+#    cpu0-1 and 1 for cpu2-5: this kernel publishes CLUSTERS as packages. The
+#    detector reports that faithfully instead of second-guessing the kernel, and
+#    core_id RESTARTS inside each package (0,1 then 0,1,2,3) - so the
+#    per-package core_id disambiguation is the only thing keeping cores 0-5
+#    distinct. Get that wrong and six cores collapse into four.
+# 2. NO cache metadata AT ALL. Every index dir exists and publishes level, type
+#    and shared_cpu_list, but there is no `size` and no `coherency_line_size`
+#    anywhere in the tree - so every size_bytes AND every line_bytes is 0,
+#    L3 included. "The kernel didn't say" taken to its limit.
+# 3. IDENTICAL MIDR across two capacity tiers. All six cores report CPU part
+#    0xd4b (3403) while cpu_capacity splits 848 / 1024 - the same silicon binned
+#    and clocked differently. cix-p1's part split MATCHED its capacity split;
+#    here the part carries no signal and capacity is the sole kind input. Both
+#    tiers sit at or above 3/4 of max (848/1024 = 0.83), so everything is
+#    Performance and BOTH Efficiency and LpEfficiency come out empty.
+# 4. NO /sys/devices/system/node directory whatsoever, so the degenerate
+#    single-node NUMA fallback is what produces numa_node_count=1.
+#
+# Only 6 of the SoC's 8 cores exist: online, present and possible all read 0-5,
+# because the headset reserves the remainder below anything userspace can see.
+# Identity (vendor/model/features) is never asserted in fixtures - worth noting
+# that ARM /proc/cpuinfo carries no model-name field at all, so this machine has
+# no model string to assert even if fixtures did.
+lp_count=6
+core_count=6
+socket_count=2
+numa_node_count=1
+kind.performance=6
+kind.efficiency=0
+kind.lp_efficiency=0
+
+# Clusters-as-packages, and the per-package core_id reuse it forces.
+lp.0.socket=0
+lp.1.socket=0
+lp.2.socket=1
+lp.3.socket=1
+lp.4.socket=1
+lp.5.socket=1
+lp.0.core=0
+lp.1.core=1
+lp.2.core=2
+lp.3.core=3
+lp.4.core=4
+lp.5.core=5
+
+# Capacity is the only kind signal, and it says "all one kind".
+lp.0.perf_hint=848
+lp.1.perf_hint=848
+lp.2.perf_hint=1024
+lp.5.perf_hint=1024
+lp.0.kind=performance
+lp.1.kind=performance
+lp.2.kind=performance
+lp.5.kind=performance
+# Same part on both tiers - the signal cix-p1 could classify by, and this one
+# cannot.
+lp.0.cpu_part=3403
+lp.1.cpu_part=3403
+lp.2.cpu_part=3403
+lp.5.cpu_part=3403
+lp.0.smt_index=0
+lp.5.smt_index=0
+lp.0.numa_node=0
+lp.5.numa_node=0
+
+# One L3 spanning BOTH packages, with no size published.
+l3_domain_count=1
+l3.0.size_bytes=0
+l3.0.core_count=6
+l3.0.lps=0-5
+lp.0.l3_domain=0
+lp.5.l3_domain=0
+
+# Neither size nor line size exists in any index dir, for any level.
+l1d.performance.size_bytes=0
+l1d.performance.line_bytes=0
+l1i.performance.size_bytes=0
+l2.performance.size_bytes=0
+l2.performance.line_bytes=0
+l2.performance.shared_by=1
+
+# Private L2 per core, every one sizeless.
+l2_domain_count=6
+l2_domain.0.size_bytes=0
+l2_domain.0.core_count=1
+l2_domain.0.l3_domain=0
+l2_domain.0.lps=0
+l2_domain.1.core_count=1
+l2_domain.1.lps=1
+l2_domain.2.core_count=1
+l2_domain.2.lps=2
+l2_domain.3.core_count=1
+l2_domain.3.lps=3
+l2_domain.4.core_count=1
+l2_domain.4.lps=4
+l2_domain.5.size_bytes=0
+l2_domain.5.core_count=1
+l2_domain.5.l3_domain=0
+l2_domain.5.lps=5
+lp.0.l2_domain=0
+lp.5.l2_domain=5
