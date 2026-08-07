@@ -34,8 +34,15 @@ sysctl-*
 
 ## Linux Sysfs Capture
 
-The Linux fixture tree is a minimal replay of the detector read set. Required
-or optional files are copied only when they exist on the source host.
+The Linux fixture tree replays the sysfs input set for topology, cache, NUMA
+and core-classification detection. Files are copied only when they exist on the
+source host, so absence is itself fixture data: a tree without `core_type` is a
+machine that does not publish it.
+
+Every captured file must be stable across recaptures. Live counters
+(`acpi_cppc/feedback_ctrs`, `acpi_cppc/wraparound_time`), current-state files
+(`cpufreq/scaling_cur_freq`, `cpufreq/cpuinfo_avg_freq`) and user-settable
+policy (`cpufreq/scaling_governor`, the energy-preference knobs) are excluded.
 
 Top-level CPU online mask:
 
@@ -43,14 +50,48 @@ Top-level CPU online mask:
 sys/devices/system/cpu/online
 ```
 
-Per logical processor:
+Per logical processor, topology and capacity:
 
 ```text
 sys/devices/system/cpu/cpu<N>/topology/physical_package_id
 sys/devices/system/cpu/cpu<N>/topology/core_id
 sys/devices/system/cpu/cpu<N>/topology/core_type
+sys/devices/system/cpu/cpu<N>/topology/thread_siblings_list
+sys/devices/system/cpu/cpu<N>/topology/core_cpus_list
 sys/devices/system/cpu/cpu<N>/cpu_capacity
 ```
+
+`thread_siblings_list` and `core_cpus_list` are the authoritative SMT grouping.
+A tree that lacks both leaves `(physical_package_id, core_id)` as the only
+sibling signal, which cannot distinguish two SMT threads of one core from two
+distinct cores whose `core_id` restarts per cluster inside one package.
+
+Per logical processor, performance tier:
+
+```text
+sys/devices/system/cpu/cpu<N>/acpi_cppc/highest_perf
+sys/devices/system/cpu/cpu<N>/acpi_cppc/nominal_perf
+sys/devices/system/cpu/cpu<N>/acpi_cppc/lowest_perf
+sys/devices/system/cpu/cpu<N>/acpi_cppc/lowest_nonlinear_perf
+sys/devices/system/cpu/cpu<N>/acpi_cppc/reference_perf
+sys/devices/system/cpu/cpu<N>/acpi_cppc/guaranteed_perf
+sys/devices/system/cpu/cpu<N>/acpi_cppc/nominal_freq
+sys/devices/system/cpu/cpu<N>/acpi_cppc/lowest_freq
+sys/devices/system/cpu/cpu<N>/cpufreq/cpuinfo_max_freq
+sys/devices/system/cpu/cpu<N>/cpufreq/cpuinfo_min_freq
+sys/devices/system/cpu/cpu<N>/cpufreq/scaling_driver
+sys/devices/system/cpu/cpu<N>/cpufreq/amd_pstate_prefcore_ranking
+sys/devices/system/cpu/cpu<N>/cpufreq/amd_pstate_highest_perf
+sys/devices/system/cpu/cpu<N>/cpufreq/amd_pstate_hw_prefcore
+```
+
+`cpu_capacity` is absent or uniform on most x86, so these are the per-core tier
+signals available there. They are recorded as a group because a bare maximum
+cannot be interpreted without the scale it sits on, and because a spread in
+`highest_perf` does not by itself mean the cores differ in kind: AMD preferred
+core publishes a per-core silicon-quality ranking on homogeneous parts, flagged
+by `amd_pstate_hw_prefcore`. The `cpufreq/` files are captured through the
+per-cpu `cpu<N>/cpufreq` symlink into `cpufreq/policy<M>`.
 
 Per cache index:
 
