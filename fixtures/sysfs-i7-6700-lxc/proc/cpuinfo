@@ -5,7 +5,7 @@ model		: 94
 model name	: Intel(R) Core(TM) i7-6700 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0xf0
-cpu MHz		: 3400.015
+cpu MHz		: 3753.656
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -33,7 +33,7 @@ model		: 94
 model name	: Intel(R) Core(TM) i7-6700 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0xf0
-cpu MHz		: 3399.866
+cpu MHz		: 3890.103
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8

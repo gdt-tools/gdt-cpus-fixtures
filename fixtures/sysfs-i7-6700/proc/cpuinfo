@@ -5,7 +5,7 @@ model		: 94
 model name	: Intel(R) Core(TM) i7-6700 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0xf0
-cpu MHz		: 3700.066
+cpu MHz		: 1200.010
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -33,7 +33,7 @@ model		: 94
 model name	: Intel(R) Core(TM) i7-6700 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0xf0
-cpu MHz		: 3700.756
+cpu MHz		: 1200.074
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -61,7 +61,7 @@ model		: 94
 model name	: Intel(R) Core(TM) i7-6700 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0xf0
-cpu MHz		: 3700.002
+cpu MHz		: 1200.054
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -89,7 +89,7 @@ model		: 94
 model name	: Intel(R) Core(TM) i7-6700 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0xf0
-cpu MHz		: 3700.064
+cpu MHz		: 1200.415
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -117,7 +117,7 @@ model		: 94
 model name	: Intel(R) Core(TM) i7-6700 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0xf0
-cpu MHz		: 3699.928
+cpu MHz		: 1200.054
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -145,7 +145,7 @@ model		: 94
 model name	: Intel(R) Core(TM) i7-6700 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0xf0
-cpu MHz		: 3700.055
+cpu MHz		: 1200.010
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -173,7 +173,7 @@ model		: 94
 model name	: Intel(R) Core(TM) i7-6700 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0xf0
-cpu MHz		: 3700.041
+cpu MHz		: 1200.000
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -201,7 +201,7 @@ model		: 94
 model name	: Intel(R) Core(TM) i7-6700 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0xf0
-cpu MHz		: 3699.937
+cpu MHz		: 1200.034
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -221,3 +221,4 @@ clflush size	: 64
 cache_alignment	: 64
 address sizes	: 39 bits physical, 48 bits virtual
 power management:
+

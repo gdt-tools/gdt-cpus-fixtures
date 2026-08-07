@@ -14,7 +14,8 @@ filesystem tree is replayed.
 
 ```text
 fixtures/
-  sysfs-5950x/           8-core Zen 3, two L3 domains
+  sysfs-5950x/           16-core Zen 3, two L3 domains, per-core CPPC ranking
+                         on uniform silicon
   sysfs-biglittle-arm/   ARM big.LITTLE, capacity-threshold kinds
   sysfs-cix-p1/          Cix CP8180, three capacity tiers, empty Efficiency tier
   sysfs-hybrid-x86/      Intel hybrid, core_type chain
