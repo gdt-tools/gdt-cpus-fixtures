@@ -72,7 +72,6 @@ Per logical processor, performance tier:
 sys/devices/system/cpu/cpu<N>/acpi_cppc/highest_perf
 sys/devices/system/cpu/cpu<N>/acpi_cppc/nominal_perf
 sys/devices/system/cpu/cpu<N>/acpi_cppc/lowest_perf
-sys/devices/system/cpu/cpu<N>/acpi_cppc/lowest_nonlinear_perf
 sys/devices/system/cpu/cpu<N>/acpi_cppc/reference_perf
 sys/devices/system/cpu/cpu<N>/acpi_cppc/guaranteed_perf
 sys/devices/system/cpu/cpu<N>/acpi_cppc/nominal_freq

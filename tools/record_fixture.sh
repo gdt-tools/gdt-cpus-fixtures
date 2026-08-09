@@ -41,7 +41,7 @@ for cpud in "$cpu_src"/cpu[0-9]*; do
     # feedback_ctrs and wraparound_time, which are live counters.
     if [ -d "$cpud/acpi_cppc" ]; then
         mkdir -p "$cpu_dst/$cpu/acpi_cppc"
-        for f in highest_perf nominal_perf lowest_perf lowest_nonlinear_perf \
+        for f in highest_perf nominal_perf lowest_perf \
                  reference_perf guaranteed_perf nominal_freq lowest_freq; do
             [ -r "$cpud/acpi_cppc/$f" ] && cp "$cpud/acpi_cppc/$f" "$cpu_dst/$cpu/acpi_cppc/$f"
         done
