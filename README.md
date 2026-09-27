@@ -20,6 +20,7 @@ fixtures/
                          L3 domains of different sizes in one package
   sysfs-biglittle-arm/   ARM big.LITTLE, capacity-threshold kinds
   sysfs-cix-p1/          Cix CP8180, three capacity tiers, empty Efficiency tier
+  sysfs-epyc-7302p-nps1/ EPYC 7302P, eight 2-core L3 domains under one NUMA node
   sysfs-hybrid-x86/      SYNTHETIC Intel hybrid, core_type chain (real Intel
                          hybrid kernels publish no core_type; see i7-12700h)
   sysfs-i7-12700h/       6P + 8E Alder Lake, no core_type, flat cpu_capacity
@@ -28,9 +29,12 @@ fixtures/
                          set, cache lists still naming offline siblings
   sysfs-numa2/           two disjoint NUMA nodes
   sysfs-numa-sparse/     non-contiguous NUMA node ids
+  sysfs-orangepi-rv2/    RISC-V Ky X1, core_id restarting per cluster
   sysfs-pi5/             Raspberry Pi 5, homogeneous, degenerate NUMA
   sysfs-quest3/          Meta Quest 3: clusters published as packages, no cache
                          sizes or line sizes at all, one MIDR across two tiers
+  sysfs-tr-7970x-nps4/   Threadripper 7970X, four NUMA nodes aligned with four L3
+                         domains but numbered out of order
   sysfs-wsl2/            WSL2 on a 5950X, virtualized L3
   sysctl-m3-max/         Apple M3 Max, perflevel-derived L2 domains
 tools/

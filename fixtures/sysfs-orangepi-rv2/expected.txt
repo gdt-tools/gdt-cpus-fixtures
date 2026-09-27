@@ -1,0 +1,28 @@
+# OrangePi RV2 (Ky X1, RISC-V) - 8 X60 cores, no SMT, two 4-core clusters
+# with 512 KiB L2 each, no L3. RISC-V /proc/cpuinfo carries "model name" and
+# "isa" but no "CPU part", so cpu_part stays 0.
+#
+# core_id restarts per cluster (cpu0-3 and cpu4-7 both read 0-3 in package 0),
+# and this recording predates the sibling lists that disambiguate it. So
+# core_count, per-LP core and smt_index, the per-L2 core counts and the kind
+# lines are withheld: they depend on core identity this tree cannot supply.
+lp_count=8
+socket_count=1
+numa_node_count=1
+l3_domain_count=0
+lp.0.l3_domain=none
+lp.0.l2_domain=0
+lp.3.l2_domain=0
+lp.4.l2_domain=1
+lp.7.l2_domain=1
+lp.7.numa_node=0
+lp.0.cpu_part=0
+
+# L2 cache domains
+l2_domain_count=2
+l2_domain.0.size_bytes=524288
+l2_domain.0.l3_domain=none
+l2_domain.0.lps=0-3
+l2_domain.1.size_bytes=524288
+l2_domain.1.l3_domain=none
+l2_domain.1.lps=4-7

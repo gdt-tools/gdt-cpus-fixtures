@@ -1,0 +1,69 @@
+# AMD Ryzen Threadripper 7970X (Zen 4) - 1 socket, 32C/64T, four 32 MiB L3
+# domains of eight cores, recorded in NPS4: four NUMA nodes that line up with
+# the L3 domains but are numbered out of order (node1 = cpus 16-23, node3 =
+# cpus 8-15). L3 equals NUMA here, the counterpart of sysfs-epyc-7302p-nps1.
+# Identity (vendor/model/features) comes from live cpuid, never from fixtures.
+lp_count=64
+core_count=32
+socket_count=1
+numa_node_count=4
+kind.performance=32
+kind.efficiency=0
+kind.lp_efficiency=0
+l3_domain_count=4
+l3.0.size_bytes=33554432
+l3.0.core_count=8
+l3.0.lps=0-7,32-39
+l3.1.size_bytes=33554432
+l3.1.core_count=8
+l3.1.lps=8-15,40-47
+l3.2.size_bytes=33554432
+l3.2.core_count=8
+l3.2.lps=16-23,48-55
+l3.3.size_bytes=33554432
+l3.3.core_count=8
+l3.3.lps=24-31,56-63
+l1d.performance.size_bytes=32768
+l1d.performance.line_bytes=64
+l2.performance.size_bytes=1048576
+l2.performance.shared_by=2
+lp.0.core=0
+lp.0.smt_index=0
+lp.0.l3_domain=0
+lp.0.numa_node=0
+lp.32.core=0
+lp.32.smt_index=1
+lp.8.l3_domain=1
+lp.8.numa_node=3
+lp.16.l3_domain=2
+lp.16.numa_node=1
+lp.31.l3_domain=3
+lp.31.numa_node=2
+lp.63.core=31
+lp.63.smt_index=1
+lp.63.numa_node=2
+# x86 /proc/cpuinfo has no "CPU part" field -> raw microarch id stays 0.
+lp.0.cpu_part=0
+
+# L2 cache domains (the first and last of each L3 domain)
+l2_domain_count=32
+l2_domain.0.size_bytes=1048576
+l2_domain.0.core_count=1
+l2_domain.0.l3_domain=0
+l2_domain.0.lps=0,32
+l2_domain.7.l3_domain=0
+l2_domain.7.lps=7,39
+l2_domain.8.l3_domain=1
+l2_domain.8.lps=8,40
+l2_domain.15.l3_domain=1
+l2_domain.15.lps=15,47
+l2_domain.16.l3_domain=2
+l2_domain.16.lps=16,48
+l2_domain.23.l3_domain=2
+l2_domain.23.lps=23,55
+l2_domain.24.l3_domain=3
+l2_domain.24.lps=24,56
+l2_domain.31.size_bytes=1048576
+l2_domain.31.core_count=1
+l2_domain.31.l3_domain=3
+l2_domain.31.lps=31,63
