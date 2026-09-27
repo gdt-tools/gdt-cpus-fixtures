@@ -108,6 +108,28 @@ NUMA nodes:
 sys/devices/system/node/node<N>/cpulist
 ```
 
+Intel hybrid core types, one hybrid perf PMU per core type:
+
+```text
+sys/devices/cpu_core/cpus
+sys/devices/cpu_atom/cpus
+sys/devices/cpu_lowpower/cpus
+```
+
+The kernel reads each CPU's type from CPUID but publishes it outside debugfs
+only through these PMUs. They exist on Intel hybrid parts whether or not SMT is
+on, while intel_pstate sets a non-uniform `cpu_capacity` only when SMT is not
+possible, so an Intel hybrid with SMT has flat capacities and these lists.
+
+Kernel release:
+
+```text
+proc/sys/kernel/osrelease
+```
+
+Which tier signals exist depends on the kernel and its cpufreq driver as well as
+on the silicon.
+
 Processor fallback data:
 
 ```text
@@ -115,7 +137,10 @@ proc/cpuinfo
 ```
 
 `proc/cpuinfo` is captured whole so per-core fields such as ARM `CPU part`
-survive. Unique device identifiers must be scrubbed.
+survive. Unique device identifiers must be scrubbed. Two x86 lines are zeroed
+because they are not properties of the machine: `cpu MHz` is the current clock
+and changes on every read, and `bogomips` is calibrated at boot and changes
+across reboots.
 
 ## macOS Sysctl Capture
 

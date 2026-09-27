@@ -78,13 +78,36 @@ for noded in /sys/devices/system/node/node[0-9]*; do
     cp "$noded/cpulist" "$out/sys/devices/system/node/$node/cpulist"
 done
 
+# Intel hybrid core types. The kernel reads each CPU's type from CPUID but
+# publishes it outside debugfs only through the hybrid perf PMUs, one device per
+# core type, each listing the CPUs it covers. These exist on Intel hybrid parts
+# only; the SMT that stops intel_pstate from setting cpu_capacity does not hide
+# them.
+for pmu in cpu_core cpu_atom cpu_lowpower; do
+    if [ -r "/sys/devices/$pmu/cpus" ]; then
+        mkdir -p "$out/sys/devices/$pmu"
+        cp "/sys/devices/$pmu/cpus" "$out/sys/devices/$pmu/cpus"
+    fi
+done
+
+# The kernel release, because which tier signals exist depends on the kernel
+# and its cpufreq driver as much as on the silicon.
+mkdir -p "$out/proc/sys/kernel"
+cp /proc/sys/kernel/osrelease "$out/proc/sys/kernel/osrelease"
+
 # Capture the WHOLE /proc/cpuinfo: a faithful snapshot, and it preserves the
 # per-core data the first block hides (notably ARM `CPU part`, which differs per
 # core -- e.g. A720 0xd81 vs A520 0xd80 -- a latent kind signal). The detector's
 # fallback still only reads the first block. SCRUB the board `Serial` though:
-# Raspberry Pi exposes a unique per-unit serial we must not commit.
-mkdir -p "$out/proc"
-sed -E 's/^(Serial[[:space:]]*:[[:space:]]*).*/\10000000000000000/' /proc/cpuinfo > "$out/proc/cpuinfo"
+# Raspberry Pi exposes a unique per-unit serial we must not commit. And zero the
+# two x86 values that are not properties of the machine: `cpu MHz` is the
+# current clock and differs on every read, `bogomips` is calibrated at boot and
+# differs across reboots. ARM's `BogoMIPS` comes from the fixed timer frequency
+# and stays.
+sed -E -e 's/^(Serial[[:space:]]*:[[:space:]]*).*/\10000000000000000/' \
+       -e 's/^(cpu MHz[[:space:]]*:[[:space:]]*).*/\10.000/' \
+       -e 's/^(bogomips[[:space:]]*:[[:space:]]*).*/\10.00/' \
+       /proc/cpuinfo > "$out/proc/cpuinfo"
 
 echo "recorded $(find "$out" -type f | wc -l) files into $out"
 echo "next: author $out/expected.txt (key=value, see fixture_tests.rs)"
