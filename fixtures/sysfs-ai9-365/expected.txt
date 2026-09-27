@@ -1,0 +1,86 @@
+# AMD Ryzen AI 9 H 365 (Strix Point) - 4 Zen 5 + 6 Zen 5c cores, SMT on both,
+# and TWO L3 domains of different sizes in one package: 16 MiB over the Zen 5
+# cores, 8 MiB over the Zen 5c cores. Recorded live with the extended recorder.
+# A real hybrid AMD WITHOUT core_type files: cpu_capacity is a flat 1024. The
+# tiers show in amd_pstate_highest_perf (196 vs 128) and cpuinfo_max_freq
+# (5.09 vs 3.32 GHz); acpi_cppc/highest_perf and amd_pstate_prefcore_ranking
+# carry per-core binning on top (208/202/208/196 across the Zen 5 cores).
+#
+# Topology assertions only. The kind.* and per-kind cache lines are withheld
+# until kind classification reads those tier signals. Identity
+# (vendor/model/features) comes from live cpuid, never from fixtures.
+lp_count=20
+core_count=10
+socket_count=1
+numa_node_count=1
+l3_domain_count=2
+l3.0.size_bytes=16777216
+l3.0.core_count=4
+l3.0.lps=0-3,10-13
+l3.1.size_bytes=8388608
+l3.1.core_count=6
+l3.1.lps=4-9,14-19
+lp.0.core=0
+lp.0.smt_index=0
+lp.0.l3_domain=0
+lp.0.l2_domain=0
+lp.10.core=0
+lp.10.smt_index=1
+lp.10.l3_domain=0
+lp.3.core=3
+lp.3.l3_domain=0
+lp.4.core=4
+lp.4.smt_index=0
+lp.4.l3_domain=1
+lp.4.l2_domain=4
+lp.14.core=4
+lp.14.smt_index=1
+lp.19.core=9
+lp.19.smt_index=1
+lp.19.l3_domain=1
+lp.19.l2_domain=9
+# x86 /proc/cpuinfo has no "CPU part" field -> raw microarch id stays 0.
+lp.0.cpu_part=0
+
+# L2 cache domains
+l2_domain_count=10
+l2_domain.0.size_bytes=1048576
+l2_domain.0.core_count=1
+l2_domain.0.l3_domain=0
+l2_domain.0.lps=0,10
+l2_domain.1.size_bytes=1048576
+l2_domain.1.core_count=1
+l2_domain.1.l3_domain=0
+l2_domain.1.lps=1,11
+l2_domain.2.size_bytes=1048576
+l2_domain.2.core_count=1
+l2_domain.2.l3_domain=0
+l2_domain.2.lps=2,12
+l2_domain.3.size_bytes=1048576
+l2_domain.3.core_count=1
+l2_domain.3.l3_domain=0
+l2_domain.3.lps=3,13
+l2_domain.4.size_bytes=1048576
+l2_domain.4.core_count=1
+l2_domain.4.l3_domain=1
+l2_domain.4.lps=4,14
+l2_domain.5.size_bytes=1048576
+l2_domain.5.core_count=1
+l2_domain.5.l3_domain=1
+l2_domain.5.lps=5,15
+l2_domain.6.size_bytes=1048576
+l2_domain.6.core_count=1
+l2_domain.6.l3_domain=1
+l2_domain.6.lps=6,16
+l2_domain.7.size_bytes=1048576
+l2_domain.7.core_count=1
+l2_domain.7.l3_domain=1
+l2_domain.7.lps=7,17
+l2_domain.8.size_bytes=1048576
+l2_domain.8.core_count=1
+l2_domain.8.l3_domain=1
+l2_domain.8.lps=8,18
+l2_domain.9.size_bytes=1048576
+l2_domain.9.core_count=1
+l2_domain.9.l3_domain=1
+l2_domain.9.lps=9,19

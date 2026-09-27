@@ -16,9 +16,13 @@ filesystem tree is replayed.
 fixtures/
   sysfs-5950x/           16-core Zen 3, two L3 domains, per-core CPPC ranking
                          on uniform silicon
+  sysfs-ai9-365/         Ryzen AI 9 H 365, Zen 5 + Zen 5c with SMT on both, two
+                         L3 domains of different sizes in one package
   sysfs-biglittle-arm/   ARM big.LITTLE, capacity-threshold kinds
   sysfs-cix-p1/          Cix CP8180, three capacity tiers, empty Efficiency tier
-  sysfs-hybrid-x86/      Intel hybrid, core_type chain
+  sysfs-hybrid-x86/      SYNTHETIC Intel hybrid, core_type chain (real Intel
+                         hybrid kernels publish no core_type; see i7-12700h)
+  sysfs-i7-12700h/       6P + 8E Alder Lake, no core_type, flat cpu_capacity
   sysfs-i7-6700/         4-core Skylake, monolithic L3
   sysfs-i7-6700-lxc/     the same chip under a cpuset-limited LXC: sparse online
                          set, cache lists still naming offline siblings

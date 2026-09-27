@@ -1,0 +1,70 @@
+# Intel Core i7-12700H (Alder Lake-H) - 6 P cores with SMT, 8 E cores in two
+# 4-core L2 clusters, one 24 MiB L3. Recorded live with the extended recorder.
+# A real hybrid x86 WITHOUT core_type files: cpu_capacity is a flat 1024 and
+# acpi_cppc/highest_perf a flat 59 on every LP. The tiers show only in
+# acpi_cppc nominal_perf (29 vs 17), guaranteed_perf (30 vs 17) and
+# cpuinfo_max_freq (4.6-4.7 vs 3.5 GHz).
+#
+# Topology assertions only. The kind.* and per-kind cache lines are withheld
+# until kind classification reads those tier signals. Identity
+# (vendor/model/features) comes from live cpuid, never from fixtures.
+lp_count=20
+core_count=14
+socket_count=1
+numa_node_count=1
+l3_domain_count=1
+l3.0.size_bytes=25165824
+l3.0.core_count=14
+l3.0.lps=0-19
+lp.0.core=0
+lp.0.smt_index=0
+lp.0.l3_domain=0
+lp.0.l2_domain=0
+lp.1.core=0
+lp.1.smt_index=1
+lp.11.core=5
+lp.11.smt_index=1
+lp.12.core=6
+lp.12.smt_index=0
+lp.12.l2_domain=6
+lp.19.core=13
+lp.19.smt_index=0
+lp.19.l3_domain=0
+lp.19.l2_domain=7
+# x86 /proc/cpuinfo has no "CPU part" field -> raw microarch id stays 0.
+lp.0.cpu_part=0
+
+# L2 cache domains
+l2_domain_count=8
+l2_domain.0.size_bytes=1310720
+l2_domain.0.core_count=1
+l2_domain.0.l3_domain=0
+l2_domain.0.lps=0-1
+l2_domain.1.size_bytes=1310720
+l2_domain.1.core_count=1
+l2_domain.1.l3_domain=0
+l2_domain.1.lps=2-3
+l2_domain.2.size_bytes=1310720
+l2_domain.2.core_count=1
+l2_domain.2.l3_domain=0
+l2_domain.2.lps=4-5
+l2_domain.3.size_bytes=1310720
+l2_domain.3.core_count=1
+l2_domain.3.l3_domain=0
+l2_domain.3.lps=6-7
+l2_domain.4.size_bytes=1310720
+l2_domain.4.core_count=1
+l2_domain.4.l3_domain=0
+l2_domain.4.lps=8-9
+l2_domain.5.size_bytes=1310720
+l2_domain.5.core_count=1
+l2_domain.5.l3_domain=0
+l2_domain.5.lps=10-11
+l2_domain.6.size_bytes=2097152
+l2_domain.6.core_count=4
+l2_domain.6.l3_domain=0
+l2_domain.6.lps=12-15
+l2_domain.7.size_bytes=2097152
+l2_domain.7.core_count=4
+l2_domain.7.l3_domain=0
+l2_domain.7.lps=16-19
