@@ -91,9 +91,10 @@ for pmu in cpu_core cpu_atom cpu_lowpower; do
 done
 
 # The kernel release, because which tier signals exist depends on the kernel
-# and its cpufreq driver as much as on the silicon.
+# and its cpufreq driver as much as on the silicon. Read with cat, not cp: a
+# procfs file reports size 0, and BusyBox cp copies that many bytes.
 mkdir -p "$out/proc/sys/kernel"
-cp /proc/sys/kernel/osrelease "$out/proc/sys/kernel/osrelease"
+cat /proc/sys/kernel/osrelease > "$out/proc/sys/kernel/osrelease"
 
 # Capture the WHOLE /proc/cpuinfo: a faithful snapshot, and it preserves the
 # per-core data the first block hides (notably ARM `CPU part`, which differs per
